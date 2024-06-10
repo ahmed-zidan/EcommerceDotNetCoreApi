@@ -1,4 +1,6 @@
-﻿using Infrastructure.IRepo;
+﻿using AutoMapper;
+using Core.IRepo;
+using EcommerceApi.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,23 +13,27 @@ namespace EcommerceApi.Controllers
     public class ProductController : BaseController
     {
         private readonly IUnitOfWork _uow;
-        public ProductController(IUnitOfWork uow)
+        private readonly IMapper _mapper;
+        public ProductController(IUnitOfWork uow , IMapper mapper)
         {
             _uow = uow;
+            _mapper = mapper;
         }
 
         [HttpGet("getProducts")]
         public async Task<IActionResult> getProducts()
         {
-            var data = await _uow._productRepo.getProducts();
-            return Ok(data);
+            var data = await _uow._productRepo.getProductsAsync();
+            var products = _mapper.Map<List<ProdeuctReturnDto>>(data);
+            return Ok(products);
         }
 
         [HttpGet("getProduct/{id}")]
         public async Task<IActionResult> getProduct(int id)
         {
-            var data = await _uow._productRepo.getProductById(id);
-            return Ok(data);
+            var data = await _uow._productRepo.getProductByIdAsync(id); 
+            var product = _mapper.Map<ProdeuctReturnDto>(data);
+            return Ok(product);
         }
     }
 }

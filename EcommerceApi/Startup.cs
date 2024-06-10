@@ -1,5 +1,5 @@
 using Infrastructure.Data;
-using Infrastructure.IRepo;
+using Core.IRepo;
 using Infrastructure.Repo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EcommerceApi.Helper;
 
 namespace EcommerceApi
 {
@@ -30,7 +31,7 @@ namespace EcommerceApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddAutoMapper(typeof(MyMapper));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EcommerceDb")));
         }
@@ -44,9 +45,9 @@ namespace EcommerceApi
             }
 
             app.UseHttpsRedirection();
-
+          
             app.UseRouting();
-
+            app.UseStaticFiles();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

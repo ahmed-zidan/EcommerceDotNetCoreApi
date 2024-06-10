@@ -1,4 +1,4 @@
-﻿using Infrastructure.IRepo;
+﻿using Core.IRepo;
 using Infrastructure.Data;
 using Infrastructure.Repo;
 using System;

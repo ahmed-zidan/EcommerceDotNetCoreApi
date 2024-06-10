@@ -1,6 +1,6 @@
-﻿using Core.Models;
+﻿using Core.IRepo;
+using Core.Models;
 using Infrastructure.Data;
-using Infrastructure.IRepo;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,14 +17,14 @@ namespace Infrastructure.Repo
             _context = context;
         }
 
-        public async Task<Product> getProductById(int id)
+        public async Task<Product> getProductByIdAsync(int id)
         {
-            return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Products.Include(x=>x.ProductBrand).Include(x=>x.ProductType).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<Product>> getProducts()
+        public async Task<IEnumerable<Product>> getProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Include(x => x.ProductBrand).Include(x => x.ProductType).ToListAsync();
         }
     }
 }

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Infrastructure.IRepo
+namespace Core.IRepo
 {
     public interface IProduct
     {
-        Task<IEnumerable<Product>> getProducts();
-        Task<Product> getProductById(int id);
+        Task<IEnumerable<Product>> getProductsAsync();
+        Task<Product> getProductByIdAsync(int id);
     }
 }
