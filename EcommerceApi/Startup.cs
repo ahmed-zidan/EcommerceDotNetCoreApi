@@ -1,20 +1,12 @@
 using Infrastructure.Data;
-using Core.IRepo;
-using Infrastructure.Repo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using EcommerceApi.Helper;
+using EcommerceApi.Middlewares;
+using EcommerceApi.Extensions;
 
 namespace EcommerceApi
 {
@@ -32,24 +24,27 @@ namespace EcommerceApi
         {
             services.AddControllers();
             services.AddAutoMapper(typeof(MyMapper));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EcommerceDb")));
+            services.AddApplicationServices();
+            services.AddSwaggerServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            /*if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
+            }*/
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
           
             app.UseRouting();
             app.UseStaticFiles();
             app.UseAuthorization();
-
+            app.UseSwaggerServices();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
