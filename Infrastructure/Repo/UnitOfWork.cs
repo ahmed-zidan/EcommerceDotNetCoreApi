@@ -17,6 +17,10 @@ namespace Infrastructure.Repo
         }
         public IProduct _productRepo => new ProductRepo(_context);
 
+        public IBrand _brandRepo => new BrandRepo(_context);
+
+        public IType _typeRepo => new TypeRepo(_context);
+
         public async Task<bool> saveChanges()
         {
             return await _context.SaveChangesAsync() > 0;

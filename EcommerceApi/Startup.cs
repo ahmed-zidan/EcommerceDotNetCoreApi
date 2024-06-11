@@ -27,6 +27,10 @@ namespace EcommerceApi
             services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EcommerceDb")));
             services.AddApplicationServices();
             services.AddSwaggerServices();
+            services.AddCors(p => p.AddDefaultPolicy(build => {
+                build.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+            }
+               ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +42,9 @@ namespace EcommerceApi
             }*/
 
             app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseCors();
+
 
             app.UseHttpsRedirection();
           
