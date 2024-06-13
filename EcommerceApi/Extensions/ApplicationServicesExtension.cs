@@ -12,6 +12,7 @@ namespace EcommerceApi.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICustomerBasket, BasketRepo>();
             services.Configure<ApiBehaviorOptions>(opt =>
             {
                 opt.InvalidModelStateResponseFactory = actionContext =>

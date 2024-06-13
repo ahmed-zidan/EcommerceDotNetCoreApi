@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using EcommerceApi.Helper;
 using EcommerceApi.Middlewares;
 using EcommerceApi.Extensions;
+using StackExchange.Redis;
 
 namespace EcommerceApi
 {
@@ -25,6 +26,10 @@ namespace EcommerceApi
             services.AddControllers();
             services.AddAutoMapper(typeof(MyMapper));
             services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EcommerceDb")));
+            services.AddSingleton<IConnectionMultiplexer>(x => {
+                var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"), true);
+                return ConnectionMultiplexer.Connect(configuration);
+            });
             services.AddApplicationServices();
             services.AddSwaggerServices();
             services.AddCors(p => p.AddDefaultPolicy(build => {
