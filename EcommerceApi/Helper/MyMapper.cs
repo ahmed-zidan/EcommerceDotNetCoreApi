@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Models;
+using Core.Models.Identity;
 using EcommerceApi.Dtos;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace EcommerceApi.Helper
                 .ForMember(x=>x.ProductBrandName , y=>y.MapFrom(src=>src.ProductBrand.Name))
                 .ForMember(x=>x.ProductTypeName , y=>y.MapFrom(src=>src.ProductType.Name))
                 .ForMember(x=>x.PictureUrl , y=>y.MapFrom<ProductUrlResolver>());
+
+            CreateMap<Address, AddressDto>().ReverseMap();
         }
     }
 }

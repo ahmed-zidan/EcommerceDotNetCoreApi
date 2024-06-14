@@ -26,6 +26,8 @@ namespace EcommerceApi
             services.AddControllers();
             services.AddAutoMapper(typeof(MyMapper));
             services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EcommerceDb")));
+            services.AddIdentetyService(Configuration);
+
             services.AddSingleton<IConnectionMultiplexer>(x => {
                 var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"), true);
                 return ConnectionMultiplexer.Connect(configuration);
@@ -55,6 +57,7 @@ namespace EcommerceApi
           
             app.UseRouting();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseSwaggerServices();
             app.UseEndpoints(endpoints =>

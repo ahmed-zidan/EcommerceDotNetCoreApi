@@ -21,7 +21,6 @@ namespace Infrastructure.Repo
             var res = await _redis.KeyDeleteAsync(basketId);
             return res;
         }
-
         public async Task<CustomerBasket> getBasket(string basketId)
         {
             var data = await _redis.StringGetAsync(basketId);

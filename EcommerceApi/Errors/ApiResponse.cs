@@ -13,7 +13,7 @@ namespace EcommerceApi.Errors
         public ApiResponse(int statusCode  , string mssage = null)
         {
             this.StatusCode = statusCode;
-            this.Message = Message ?? getDefaultMessageForStatusCode(statusCode);
+            this.Message = mssage ?? getDefaultMessageForStatusCode(statusCode);
         }
 
         private string getDefaultMessageForStatusCode(int statusCode)

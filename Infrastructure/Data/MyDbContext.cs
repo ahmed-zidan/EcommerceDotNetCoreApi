@@ -1,4 +1,6 @@
 ﻿using Core.Models;
+using Core.Models.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class MyDbContext:DbContext
+    public class MyDbContext:IdentityDbContext<AppUser>
     {
 
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
@@ -26,7 +28,7 @@ namespace Infrastructure.Data
         public DbSet<Product> Products  { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
-      
+       
 
     }
 }
