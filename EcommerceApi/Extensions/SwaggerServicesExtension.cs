@@ -15,6 +15,24 @@ namespace EcommerceApi.Extensions
             services.AddSwaggerGen(o =>
             {
                 o.SwaggerDoc("v1", new OpenApiInfo() { Title = "ECommerse", Version = "V11" });
+                //used for authentication
+                var securityScheme = new OpenApiSecurityScheme()
+                {
+                    Description = "JWT auth Bearer Scheme",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference()
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+
+                };
+                o.AddSecurityDefinition("Bearer", securityScheme);
+                var securityRequirements = new OpenApiSecurityRequirement() { { securityScheme, new[] { "Bearer" } } };
+                o.AddSecurityRequirement(securityRequirements);
             });
 
             return services;

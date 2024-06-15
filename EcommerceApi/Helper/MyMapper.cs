@@ -19,6 +19,8 @@ namespace EcommerceApi.Helper
                 .ForMember(x=>x.PictureUrl , y=>y.MapFrom<ProductUrlResolver>());
 
             CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<BasketItemDto, BasketItem>().ReverseMap();
+            CreateMap<CustomerBasketDto, CustomerBasket>().ReverseMap();
         }
     }
 }

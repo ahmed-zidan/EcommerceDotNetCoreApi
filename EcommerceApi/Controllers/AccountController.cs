@@ -69,12 +69,7 @@ namespace EcommerceApi.Controllers
                 return BadRequest(new ApiResponse(400, x));
             }
 
-            return Ok(new UserInfoDto()
-            {
-                DisplayName = model.DisplayName,
-                Email = model.Email,
-                Token = _tokenService.CreateToken(user)
-            }) ;
+            return Ok() ;
         }
 
         [Authorize]

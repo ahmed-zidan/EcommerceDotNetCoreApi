@@ -1,5 +1,7 @@
-﻿using Core.IRepo;
+﻿using AutoMapper;
+using Core.IRepo;
 using Core.Models;
+using EcommerceApi.Dtos;
 using EcommerceApi.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +16,11 @@ namespace EcommerceApi.Controllers
     public class BasketController : BaseController
     {
         private readonly ICustomerBasket _basket;
-        public BasketController(ICustomerBasket basket)
+        private readonly IMapper _mapper;
+        public BasketController(ICustomerBasket basket, IMapper mapper)
         {
             _basket = basket;
+            _mapper = mapper;
         }
 
         [HttpGet("getBasket/{id}")]
@@ -29,9 +33,10 @@ namespace EcommerceApi.Controllers
         }
 
         [HttpPut("updateBasket")]
-        public async Task<IActionResult> updateBasket(CustomerBasket model)
+        public async Task<IActionResult> updateBasket(CustomerBasketDto model)
         {
-            var basket = await _basket.updateBasket(model);
+            var bask = _mapper.Map<CustomerBasket>(model);
+            var basket = await _basket.updateBasket(bask);
             if (basket != null)
             {
                 return Ok(basket);
