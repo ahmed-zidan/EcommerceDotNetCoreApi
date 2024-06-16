@@ -10,6 +10,7 @@ namespace Core.IRepo
         public IProduct _productRepo { get;}
         public IBrand _brandRepo { get; }
         public IType _typeRepo{ get; }
+        public IOrder _orderRepo{ get; }
         Task<bool> saveChanges();
     }
 }

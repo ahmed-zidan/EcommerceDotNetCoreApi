@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core.Models;
 using Core.Models.Identity;
+using Core.Models.Orders;
 using EcommerceApi.Dtos;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,15 @@ namespace EcommerceApi.Helper
             CreateMap<Address, AddressDto>().ReverseMap();
             CreateMap<BasketItemDto, BasketItem>().ReverseMap();
             CreateMap<CustomerBasketDto, CustomerBasket>().ReverseMap();
+            CreateMap<AddressDto, OrderAddress>().ReverseMap();
+            CreateMap<OrderItem, OrderItemToReturnDto>().
+                ForMember(x => x.ProductId, y => y.MapFrom(src => src.ProductItemOrder.ProductId)).
+                ForMember(x => x.ProductName, y => y.MapFrom(src => src.ProductItemOrder.ProductName)).
+                ForMember(x => x.PictureUrl, y => y.MapFrom<OrderUrlResolver>());
+               
+            CreateMap<Order, OrderToReturnDto>().
+                ForMember(x => x.Total, src => src.MapFrom(dst => dst.getTotal()))
+                ;
         }
     }
 }

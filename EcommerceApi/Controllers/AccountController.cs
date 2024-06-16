@@ -68,7 +68,6 @@ namespace EcommerceApi.Controllers
                 var x = created.Errors.FirstOrDefault().Description;
                 return BadRequest(new ApiResponse(400, x));
             }
-
             return Ok() ;
         }
 
